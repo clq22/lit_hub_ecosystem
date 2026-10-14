@@ -1093,6 +1093,30 @@
       ]
     },
     {
+      "slug": "lighterllama",
+      "name": "Lighterllama",
+      "description": "lighter stats",
+      "url": "https://lighterllama.xyz/",
+      "twitter": "",
+      "discord": "",
+      "telegram": "",
+      "logo": "/logos/lighterllama_logo.jpg",
+      "categories": [
+        "Data"
+      ],
+      "instances": [
+        "Lighter Core",
+        "Lighter Robinhood"
+      ],
+      "status": "Live",
+      "createdAt": "2026-10-10",
+      "official": false,
+      "builderDiscords": [
+        "@ajey_eth"
+      ],
+      "longDescription": "a website where you can track lighter insights like volume ,TVL ,buybacks and many other things"
+    },
+    {
       "slug": "lighterlytics",
       "name": "Lighterlytics",
       "description": "",
@@ -2438,5 +2462,5 @@
       ]
     }
   ],
-  "generatedAt": "2026-10-13T09:32:50.351Z"
+  "generatedAt": "2026-10-14T19:35:27.934Z"
 }
