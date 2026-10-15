@@ -37,8 +37,9 @@ async function logoData(project, root) {
 
 async function template() {
   const data = async (file) => (await readFile(path.join(ASSETS, file))).toString("base64");
-  const [regular, bold, mono, brand] = await Promise.all([
+  const [regular, bold, mono, brand, outline] = await Promise.all([
     data("fonts/Arimo-Regular.ttf"), data("fonts/Arimo-Bold.ttf"), data("fonts/Cousine-Regular.ttf"), data("lit-hub-logo.png"),
+    data("lit-hub-outline.svg"),
   ]);
   return `<!doctype html><html><head><meta charset="utf-8"><style>
     @font-face { font-family: Card; src: url(data:font/ttf;base64,${regular}); font-weight: 400; }
@@ -65,17 +66,14 @@ async function template() {
     #logo img { width:100%; height:100%; object-fit:contain; }
     #initials { width:100%; height:100%; display:flex; align-items:center; justify-content:center;
       border:1px solid #d3d7df; border-radius:54px; background:#eceef3; font-size:110px; font-weight:700; }
-    .watermark { position:absolute; left:1332px; top:196px; width:320px; height:540px; }
+    .watermark { position:absolute; left:1332px; top:196px; width:417px; height:540px; }
     .footer { position:absolute; left:96px; top:821px; font-size:16px; letter-spacing:1px; }
     .url { position:absolute; right:96px; top:816px; display:flex; align-items:center; gap:20px;
       font-family:CardMono, monospace; font-size:23px; letter-spacing:1px; }
   </style></head><body><main id="card">
     <div class="brand"><img src="data:image/png;base64,${brand}" alt=""><span>Lit Hub</span></div>
     <div class="micro eyebrow">ECOSYSTEM UPDATE</div><div class="rule top-rule"></div>
-    <svg class="watermark" viewBox="0 0 320 540" fill="none" stroke="#d1d6df" stroke-width="1">
-      <path d="M0 540V176L254 0L320 46V375L168 540V300L112 340V457Z"/>
-      <path d="M112 340V230L254 140L320 186"/>
-    </svg>
+    <img class="watermark" src="data:image/svg+xml;base64,${outline}" alt="">
     <div class="copy"><h1 id="name"></h1><div id="tagline">is live on Lit Hub</div></div>
     <div id="logo"></div><div class="rule bottom-rule"></div>
     <div class="micro footer">WHERE COMMUNITY AND BUILDERS MEET.</div>

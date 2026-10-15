@@ -4,6 +4,10 @@
   `public/lit-hub-logo.png` at commit
   `a64dd8e12a021c99e6b9f58e5276a2e0286e039a`. The white mark is displayed in
   black with CSS `brightness(0)`; its transparent silhouette is unchanged.
+- `lit-hub-outline.svg`: outline of the same logo, traced from its alpha
+  silhouette at the native 499×647 size (alpha threshold 128, contour
+  simplification tolerance 2 pixels). Both the outer arch and separate center
+  stroke are preserved. Used as the thin, enlarged background watermark.
 - `fonts/Arimo-{Regular,Bold}.ttf`: unmodified files from
   [googlefonts/arimo](https://github.com/googlefonts/arimo), commit
   `4a6255f269916ae7ad3fc2706b0935e7621396b8`, `fonts/ttf/`.
