@@ -54,13 +54,14 @@ async function template() {
     .eyebrow { position:absolute; top:98px; right:96px; }
     .rule { position:absolute; left:96px; right:96px; height:1px; background:#aeb5c0; }
     .top-rule { top:167px; } .bottom-rule { top:785px; }
-    .copy { position:absolute; left:96px; top:250px; height:450px; width:780px;
+    .copy { position:absolute; left:96px; top:250px; height:450px; width:900px;
       display:flex; flex-direction:column; justify-content:center; }
     #name { margin:0; flex-shrink:0; font-size:144px; font-weight:700; letter-spacing:-6px; line-height:1.04;
-      overflow-wrap:anywhere; }
+      overflow-wrap:normal; word-break:normal; }
+    #name .word { display:inline-block; white-space:nowrap; }
     #tagline { margin-top:20px; font-size:84px; line-height:1.12; letter-spacing:-3px;
       white-space:nowrap; font-weight:400; }
-    #logo { position:absolute; left:926px; top:307px; width:316px; height:316px;
+    #logo { position:absolute; left:1080px; top:307px; width:316px; height:316px;
       display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:54px; }
     #logo img { width:100%; height:100%; object-fit:contain; }
     #initials { width:100%; height:100%; display:flex; align-items:center; justify-content:center;
@@ -98,7 +99,16 @@ export async function createCardRenderer() {
           await page.route("**/*", (route) => route.abort());
           await page.setContent(html);
           await page.evaluate(async ({ name, logo }) => {
-            document.querySelector("#name").textContent = name;
+            const title = document.querySelector("#name");
+            // Keep every word intact (including hyphenated names). Wrapping
+            // happens only at the spaces between these spans.
+            for (const [index, word] of name.split(" ").entries()) {
+              if (index) title.append(" ");
+              const span = document.createElement("span");
+              span.className = "word";
+              span.textContent = word;
+              title.append(span);
+            }
             const container = document.querySelector("#logo");
             if (logo) {
               const image = new Image();
@@ -112,14 +122,14 @@ export async function createCardRenderer() {
               container.append(initials);
             }
             await document.fonts.ready;
-            const title = document.querySelector("#name");
+            const width = title.clientWidth;
             let size = 144;
-            while (size > 36 && (title.getBoundingClientRect().height > size * 1.04 * 2 + 2 || title.scrollWidth > 780)) {
+            while (size > 36 && (title.getBoundingClientRect().height > size * 1.04 * 2 + 2 || title.scrollWidth > width)) {
               size -= 2;
               title.style.fontSize = size + "px";
               title.style.letterSpacing = -(size / 24) + "px";
             }
-            if (title.getBoundingClientRect().height > size * 1.04 * 2 + 2 || title.scrollWidth > 780) {
+            if (title.getBoundingClientRect().height > size * 1.04 * 2 + 2 || title.scrollWidth > width) {
               throw new Error("Project name does not fit the card");
             }
           }, { name, logo });
@@ -128,7 +138,15 @@ export async function createCardRenderer() {
               const { x, y, width, height } = document.querySelector(selector).getBoundingClientRect();
               return { x, y, width, height };
             };
+            const lines = [];
+            for (const word of document.querySelectorAll("#name .word")) {
+              const { y } = word.getBoundingClientRect();
+              const line = lines.at(-1);
+              if (line && Math.abs(line.y - y) < 1) line.words.push(word.textContent);
+              else lines.push({ y, words: [word.textContent] });
+            }
             return { title: box("#name"), tagline: box("#tagline"), logo: box("#logo"),
+              lines: lines.map(({ words }) => words.join(" ")),
               fontSize: getComputedStyle(document.querySelector("#name")).fontSize,
               name: document.querySelector("#name").textContent };
           });
