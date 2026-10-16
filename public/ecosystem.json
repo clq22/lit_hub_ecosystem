@@ -413,6 +413,36 @@
       ]
     },
     {
+      "slug": "cream-run",
+      "name": "Cream.run",
+      "description": "AI-run strategy house for perps on Lighter",
+      "url": "https://www.cream.run",
+      "twitter": "@creamdotrun",
+      "discord": "",
+      "telegram": "",
+      "logo": "/logos/cream-run_logo.png",
+      "categories": [
+        "Agents",
+        "Bots"
+      ],
+      "instances": [
+        "Lighter Core"
+      ],
+      "status": "Not Live",
+      "createdAt": "2026-10-15",
+      "official": false,
+      "longDescription": "A strategy house.\nWe build trading strategies and keep upgrading our data sources and models to ship new ones.\nRight now we’re focused on trader scoring and building cohorts to rebalance asset specific vaults.",
+      "demoUrl": "https://www.cream.run",
+      "team": [
+        {
+          "name": "Hex",
+          "role": "Founder",
+          "avatar": "",
+          "twitter": "@hexinshalla"
+        }
+      ]
+    },
+    {
       "slug": "cryexc",
       "name": "Cryexc",
       "description": "Free orderflow terminal with footprint, heatmaps, DOM, TPO, CVD and execution on Lighter.",
@@ -2462,5 +2492,5 @@
       ]
     }
   ],
-  "generatedAt": "2026-10-14T19:35:27.934Z"
+  "generatedAt": "2026-10-16T11:13:26.610Z"
 }
