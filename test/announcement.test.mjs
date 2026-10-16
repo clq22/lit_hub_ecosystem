@@ -26,9 +26,34 @@ test("JSON project name and original PNG produce a 1600x900 two-line card", () =
   assert.equal(example.png.readUInt32BE(20), 900);
   assert.equal(example.layout.name, "Telegram Wallet");
   assert.equal(example.layout.fontSize, "144px");
+  assert.deepEqual(example.layout.lines, ["Telegram", "Wallet"]);
   assert.ok(example.layout.title.height > 250);
   assert.ok(example.layout.title.y + example.layout.title.height < example.layout.tagline.y);
   assert.equal(example.fallbackLogo, false);
+});
+
+for (const name of ["Lighterllama", "SuperLongProjectName", "WWWWWWWWWWWW", "Long-Hyphenated-Project"]) {
+  test(`single-word name never leaves letters on another line: ${name}`, async () => {
+    const { layout } = await renderer.render({ name }, path.join(temp, `${name}.png`));
+    assert.deepEqual(layout.lines, [name]);
+    assert.ok(layout.title.height < parseFloat(layout.fontSize) * 1.1);
+    assert.ok(layout.title.x + layout.title.width < layout.logo.x);
+    assert.ok(layout.tagline.y + layout.tagline.height < 785);
+  });
+}
+
+test("long multi-word names wrap only at spaces and fit within two lines", async () => {
+  const name = "Institutional Trading Infrastructure";
+  const { layout } = await renderer.render({ name }, path.join(temp, "multi-word.png"));
+  assert.equal(layout.lines.join(" "), name);
+  assert.ok(layout.lines.length <= 2);
+  assert.ok(parseFloat(layout.fontSize) < 144);
+  assert.ok(layout.title.x + layout.title.width < layout.logo.x);
+  assert.ok(layout.tagline.y + layout.tagline.height < 785);
+});
+
+test("an unbroken name that cannot fit fails rather than splitting or clipping", async () => {
+  await assert.rejects(renderer.render({ name: "W".repeat(240) }, path.join(temp, "too-wide.png")), /does not fit/);
 });
 
 test("same inputs render identical PNGs", async () => {
