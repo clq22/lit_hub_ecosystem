@@ -1,0 +1,39 @@
+{
+  "name": "Quote",
+  "description": "24/7 Prime Broker",
+  "url": "https://quotemarkets.xyz/",
+  "twitter": "@quotemarkets",
+  "discord": "",
+  "telegram": "@quotemarketsxy",
+  "logo": "/logos/quote_logo.png",
+  "categories": [
+    "Apps",
+    "Terminal"
+  ],
+  "instances": [
+    "Lighter Core"
+  ],
+  "status": "Not Live",
+  "createdAt": "2026-10-19",
+  "official": false,
+  "longDescription": "Quote is a 24/7 Prime Broker purpose-built for hedging RWAs by a team from JPM and ETH Zurich\n",
+  "hiring": true,
+  "hiringContact": {
+    "channel": "email",
+    "handle": "admin@catenalabs.ch"
+  },
+  "team": [
+    {
+      "name": "Filo",
+      "role": "Founder",
+      "avatar": "",
+      "twitter": "@petitfilo"
+    },
+    {
+      "name": "Noleakage",
+      "role": "Founder",
+      "avatar": "",
+      "twitter": "noleakage"
+    }
+  ]
+}
